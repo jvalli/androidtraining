@@ -3,4 +3,8 @@
     <string name="search_hint">Please search a place&#8230;</string>
     <string name="search">Search</string>
     <string name="searching">Searching</string>
+    <string name="location">Location</string>
+    <string name="location_permission_error">Need your location</string>
+    <string name="google_api_client_suspended">Google Api Client Suspended</string>
+    <string name="google_api_client_failed">Google Api Client Failed</string>
 </resources>
