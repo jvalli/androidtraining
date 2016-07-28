@@ -8,13 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gap.androidtraining.BaseAPI.FoursquareSearch;
-import com.gap.androidtraining.BaseAPI.VenueInterface;
 
 import java.util.List;
 
-/**
- * Created by jero on 7/27/16.
- */
 public class VenueAdapter extends BaseAdapter {
 
     private List<FoursquareSearch.response.Venue> items;

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -13,9 +12,6 @@ import retrofit2.http.Headers;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Query;
 
-/**
- * Created by jero on 7/27/16.
- */
 public class BaseAPI {
 
     public static final String API_URL = "https://api.foursquare.com/v2/";
@@ -82,7 +78,7 @@ public class BaseAPI {
     public interface VenueInterface {
         @GET("venues/search")
         @Headers({"Content-Type: application/json;charset=UTF-8"})
-        Call<List<FoursquareSearch.response.Venue>> searchVenues(@Query("client_id") String clientId, @Query("client_secret") String clientSecret, @Query("ll") String latitudeLongitude, @Query("v") String date, @Query("query") String query);
+        Call<FoursquareSearch> searchVenues(@Query("client_id") String clientId, @Query("client_secret") String clientSecret, @Query("ll") String latitudeLongitude, @Query("v") String date, @Query("query") String query);
     }
 
     public VenueInterface getVenueInterface() {

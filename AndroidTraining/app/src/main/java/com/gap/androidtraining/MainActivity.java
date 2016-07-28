@@ -24,14 +24,11 @@ import com.google.android.gms.location.LocationServices;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Dictionary;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
-    private String mLocation = null;
+    private String mLocation = "40.7,-74";//null;
     private VenueAdapter mVenueAdapter;
 
     @BindView(R.id.edit_text_search)
@@ -77,13 +74,14 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         String text = mEditTextSearch.getText().toString();
         String textToast = String.format("%s '%s'", getString(R.string.searching), text);
         Toast.makeText(getApplicationContext(), textToast, Toast.LENGTH_SHORT).show();
-        if (mLocation.length() > 0) {
+        if (mLocation != null && mLocation.length() > 0) {
             try {
                 searchVenues(mLocation, text);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        mEditTextSearch.clearFocus();
     }
 
     @Override
@@ -141,21 +139,21 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
         String date = simpleDate.format(new Date());
         VenueInterface venueInterface = BaseAPI.getInstance().getVenueInterface();
-        final Call<List<FoursquareSearch.response.Venue>> call = venueInterface.searchVenues(BaseAPI.FOURSQUARE_CLIENT_ID, BaseAPI.FOURSQUARE_CLIENT_SECRET, latitudeLongitude, date, query);
-        call.enqueue(new Callback<List<FoursquareSearch.response.Venue>>() {
+        final Call<FoursquareSearch> call = venueInterface.searchVenues(BaseAPI.FOURSQUARE_CLIENT_ID, BaseAPI.FOURSQUARE_CLIENT_SECRET, latitudeLongitude, date, query);
+        call.enqueue(new Callback<FoursquareSearch>() {
             @Override
-            public void onResponse(Call<List<FoursquareSearch.response.Venue>> call, Response<List<FoursquareSearch.response.Venue>> response) {
+            public void onResponse(Call<FoursquareSearch> call, Response<FoursquareSearch> response) {
 
                 mProgressDialog.hide();
-                List<FoursquareSearch.response.Venue> responseDictionary = response.body();
-                mVenueAdapter = new VenueAdapter(MainActivity.this, responseDictionary);
+                FoursquareSearch foursquareSearch = response.body();
+                mVenueAdapter = new VenueAdapter(MainActivity.this, foursquareSearch.getResponse().getVenues());
                 if (mListViewVenues != null) {
                     mListViewVenues.setAdapter(mVenueAdapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<FoursquareSearch.response.Venue>> call, Throwable t) {
+            public void onFailure(Call<FoursquareSearch> call, Throwable t) {
                 Log.d("error", "Error: " + call.request().body());
                 mProgressDialog.hide();
             }
