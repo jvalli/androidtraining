@@ -7,30 +7,19 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     tools:context="com.gap.androidtraining.MainActivity">
 
-    <EditText
-        android:id="@+id/edit_text_search"
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="@string/search_hint" />
+        android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/button_search"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.Holo.ProgressBar.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_text_search"
-        android:layout_centerHorizontal="true"
-        android:text="@string/search" />
-
-    <ListView
-        android:id="@+id/list_view_venues"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/button_search"
-        android:layout_margin="10dp" />
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>
