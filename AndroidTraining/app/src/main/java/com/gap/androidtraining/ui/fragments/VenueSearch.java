@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.gap.androidtraining.R;
 import com.gap.androidtraining.api.BaseAPI;
 import com.gap.androidtraining.data.FoursquareSearch;
+import com.gap.androidtraining.data.Venue;
 import com.gap.androidtraining.ui.BaseFragment;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -37,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class VenueSearch extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class VenueSearch extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ListView.OnItemClickListener {
 
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 122;
 
@@ -70,6 +72,8 @@ public class VenueSearch extends BaseFragment implements GoogleApiClient.Connect
         if (ContextCompat.checkSelfPermission(this.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mGoogleApiClient.connect();
         }
+
+        mListViewVenues.setOnItemClickListener(this);
 
         return view;
     }
@@ -161,5 +165,13 @@ public class VenueSearch extends BaseFragment implements GoogleApiClient.Connect
                 showProgress(false);
             }
         });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+        Venue venue = (Venue) mListViewVenues.getItemAtPosition(position);
+        VenueDetails venueDetails = VenueDetails.newInstance(venue);
+        replace(venueDetails);
     }
 }

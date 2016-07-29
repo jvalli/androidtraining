@@ -3,33 +3,19 @@ package com.gap.androidtraining.data;
 import java.io.Serializable;
 import java.util.List;
 
-public class FoursquareSearch {
+public class FoursquareSearch implements Serializable {
 
-    private response response;
+    private FoursquareSearchResponse response;
 
-    public response getResponse() {
+    public FoursquareSearchResponse getResponse() {
         return response;
     }
 
-    public class response {
+    public class FoursquareSearchResponse implements Serializable {
         private List<Venue> venues;
 
-        public List<FoursquareSearch.response.Venue> getVenues() {
+        public List<Venue> getVenues() {
             return venues;
-        }
-
-        public class Venue implements Serializable {
-            public final String id;
-            public final String name;
-            public final String verified;
-            public final String url;
-
-            public Venue(String id, String name, String verified, String url) {
-                this.id = id;
-                this.name = name;
-                this.verified = verified;
-                this.url = url;
-            }
         }
     }
 }

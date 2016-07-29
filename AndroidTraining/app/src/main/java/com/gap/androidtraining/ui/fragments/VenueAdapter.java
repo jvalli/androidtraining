@@ -8,13 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gap.androidtraining.R;
-import com.gap.androidtraining.data.FoursquareSearch;
+import com.gap.androidtraining.data.Venue;
 
 import java.util.List;
 
 public class VenueAdapter extends BaseAdapter {
 
-    private List<FoursquareSearch.response.Venue> items;
+    private List<Venue> items;
     private LayoutInflater inflater = null;
     private Activity context;
 
@@ -22,13 +22,13 @@ public class VenueAdapter extends BaseAdapter {
         TextView textViewName;
     }
 
-    public VenueAdapter(Activity context, List<FoursquareSearch.response.Venue> items) {
+    public VenueAdapter(Activity context, List<Venue> items) {
         this.items = items;
         this.context = context;
         this.inflater = LayoutInflater.from(this.context);
     }
 
-    public List<FoursquareSearch.response.Venue> getItems() {
+    public List<Venue> getItems() {
         return items;
     }
 
