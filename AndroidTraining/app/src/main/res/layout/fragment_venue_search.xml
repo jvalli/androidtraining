@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context="com.gap.androidtraining.VenueSearch">
+    tools:context="com.gap.androidtraining.ui.fragments.VenueSearch">
 
     <RelativeLayout
         android:id="@+id/layout_content"

@@ -1,4 +1,4 @@
-package com.gap.androidtraining;
+package com.gap.androidtraining.ui.fragments;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -14,6 +14,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.gap.androidtraining.R;
+import com.gap.androidtraining.api.BaseAPI;
+import com.gap.androidtraining.data.FoursquareSearch;
+import com.gap.androidtraining.ui.BaseFragment;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -137,12 +142,12 @@ public class VenueSearch extends BaseFragment implements GoogleApiClient.Connect
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
         String date = simpleDate.format(new Date());
         BaseAPI.VenueInterface venueInterface = BaseAPI.getInstance().getVenueInterface();
-        final Call<BaseAPI.FoursquareSearch> call = venueInterface.searchVenues(BaseAPI.FOURSQUARE_CLIENT_ID, BaseAPI.FOURSQUARE_CLIENT_SECRET, latitudeLongitude, date, query);
-        call.enqueue(new Callback<BaseAPI.FoursquareSearch>() {
+        final Call<FoursquareSearch> call = venueInterface.searchVenues(BaseAPI.FOURSQUARE_CLIENT_ID, BaseAPI.FOURSQUARE_CLIENT_SECRET, latitudeLongitude, date, query);
+        call.enqueue(new Callback<FoursquareSearch>() {
             @Override
-            public void onResponse(Call<BaseAPI.FoursquareSearch> call, Response<BaseAPI.FoursquareSearch> response) {
+            public void onResponse(Call<FoursquareSearch> call, Response<FoursquareSearch> response) {
 
-                BaseAPI.FoursquareSearch foursquareSearch = response.body();
+                FoursquareSearch foursquareSearch = response.body();
                 mVenueAdapter = new VenueAdapter(VenueSearch.this.getActivity(), foursquareSearch.getResponse().getVenues());
                 if (mListViewVenues != null) {
                     mListViewVenues.setAdapter(mVenueAdapter);
@@ -151,7 +156,7 @@ public class VenueSearch extends BaseFragment implements GoogleApiClient.Connect
             }
 
             @Override
-            public void onFailure(Call<BaseAPI.FoursquareSearch> call, Throwable t) {
+            public void onFailure(Call<FoursquareSearch> call, Throwable t) {
                 Log.d("error", "Error: " + call.request().body());
                 showProgress(false);
             }

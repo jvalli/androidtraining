@@ -1,7 +1,4 @@
-package com.gap.androidtraining;
-
-import java.io.Serializable;
-import java.util.List;
+package com.gap.androidtraining.api;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -11,6 +8,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Query;
+
+import  com.gap.androidtraining.data.FoursquareSearch;
 
 public class BaseAPI {
 
@@ -42,37 +41,6 @@ public class BaseAPI {
                 .build();
 
         venueInterface = retrofit.create(VenueInterface.class);
-    }
-
-    public class FoursquareSearch {
-
-        private response response;
-
-        public FoursquareSearch.response getResponse() {
-            return response;
-        }
-
-        public class response {
-            private List<Venue> venues;
-
-            public List<FoursquareSearch.response.Venue> getVenues() {
-                return venues;
-            }
-
-            public class Venue implements Serializable {
-                public final String id;
-                public final String name;
-                public final String verified;
-                public final String url;
-
-                public Venue(String id, String name, String verified, String url) {
-                    this.id = id;
-                    this.name = name;
-                    this.verified = verified;
-                    this.url = url;
-                }
-            }
-        }
     }
 
     public interface VenueInterface {

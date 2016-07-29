@@ -1,4 +1,4 @@
-package com.gap.androidtraining;
+package com.gap.androidtraining.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,6 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+
+import com.gap.androidtraining.R;
+import com.gap.androidtraining.ui.fragments.VenueSearch;
 
 import java.util.HashMap;
 import java.util.HashSet;

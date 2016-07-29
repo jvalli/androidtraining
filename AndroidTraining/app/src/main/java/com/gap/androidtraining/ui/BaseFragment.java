@@ -1,4 +1,4 @@
-package com.gap.androidtraining;
+package com.gap.androidtraining.ui;
 
 import android.app.Activity;
 import android.content.Context;

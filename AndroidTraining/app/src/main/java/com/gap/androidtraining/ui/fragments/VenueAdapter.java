@@ -1,4 +1,4 @@
-package com.gap.androidtraining;
+package com.gap.androidtraining.ui.fragments;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.gap.androidtraining.BaseAPI.FoursquareSearch;
+import com.gap.androidtraining.R;
+import com.gap.androidtraining.data.FoursquareSearch;
 
 import java.util.List;
 
