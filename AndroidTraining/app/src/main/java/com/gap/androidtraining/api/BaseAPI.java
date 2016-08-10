@@ -7,8 +7,10 @@ import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import com.gap.androidtraining.data.FoursquareGetVenue;
 import  com.gap.androidtraining.data.FoursquareSearch;
 
 public class BaseAPI {
@@ -47,6 +49,10 @@ public class BaseAPI {
         @GET("venues/search")
         @Headers({"Content-Type: application/json;charset=UTF-8"})
         Call<FoursquareSearch> searchVenues(@Query("client_id") String clientId, @Query("client_secret") String clientSecret, @Query("ll") String latitudeLongitude, @Query("v") String date, @Query("query") String query);
+
+        @GET("venues/{venue_id}")
+        @Headers({"Content-Type: application/json;charset=UTF-8"})
+        Call<FoursquareGetVenue> getVenue(@Path("venue_id") String venueId, @Query("client_id") String clientId, @Query("client_secret") String clientSecret, @Query("v") String date);
     }
 
     public VenueInterface getVenueInterface() {
