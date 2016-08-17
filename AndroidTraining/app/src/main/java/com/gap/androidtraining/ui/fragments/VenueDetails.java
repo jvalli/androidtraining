@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.gap.androidtraining.R;
@@ -15,7 +16,9 @@ import com.gap.androidtraining.ui.BaseFragment;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -30,9 +33,13 @@ public class VenueDetails extends BaseFragment {
     private static final String ARG_VENUE = "venue";
 
     private Venue mVenue = null;
+    private ImageAdapter mImageAdapter;
 
     @BindView(R.id.text_view_name)
     TextView mTextViewName;
+
+    @BindView(R.id.grid_view_gallery)
+    GridView mGridViewGallery;
 
     public static VenueDetails newInstance(Venue venue) {
         VenueDetails fragment = new VenueDetails();
@@ -80,6 +87,21 @@ public class VenueDetails extends BaseFragment {
 
                 FoursquareGetVenue foursquareGetVenue = response.body();
                 mVenue = foursquareGetVenue.getResponse().getVenue();
+                // TODO: parse images from venue response
+                List<String> testData = new ArrayList<String>();
+                testData.add("https://upload.wikimedia.org/wikipedia/commons/c/c0/Gingerbread_House_Essex_CT.jpg");
+                testData.add("https://upload.wikimedia.org/wikipedia/commons/f/f8/Ellen_H._Swallow_Richards_House_Boston_MA_01.jpg");
+                testData.add("http://resources.phrasemix.com/img/full/suburban-houses.jpg");
+                testData.add("http://hookedonhouses.net/wp-content/uploads/2009/01/Father-of-the-Bride-Lookalike-house.jpg");
+                testData.add("https://upload.wikimedia.org/wikipedia/commons/c/c9/Ranch_style_home_in_Salinas,_California.JPG");
+                testData.add("https://s-media-cache-ak0.pinimg.com/236x/90/4a/0e/904a0e6ab72e18756e5b186da3d5147b.jpg");
+                testData.add("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBqYSOdVZ04yElTOrVhvS6k9QAju846kpJp6RKm-9pdDevrnOc");
+                testData.add("http://www.comohotels.com/parrotcay/sites/default/files/styles/440x138/public/images/nonlinking/parrotcay_two_bedroom_beach_house_exterior.jpg?itok=PwZrfdDN");
+                testData.add("https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTEavCht10H_zx13RujOoRo2_y6t5JBa0Yg57VXZwCSBA2wvn8P");
+                mImageAdapter = new ImageAdapter(VenueDetails.this.getActivity(), testData);
+                if (mGridViewGallery != null) {
+                    mGridViewGallery.setAdapter(mImageAdapter);
+                }
                 showProgress(false);
             }
 
