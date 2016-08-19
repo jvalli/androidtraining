@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.gap.androidtraining.R;
 import com.gap.androidtraining.api.BaseAPI;
 import com.gap.androidtraining.data.FoursquareGetVenue;
+import com.gap.androidtraining.data.FoursquareGetVenuePhotos;
 import com.gap.androidtraining.data.Venue;
 import com.gap.androidtraining.ui.BaseFragment;
 
@@ -66,7 +67,7 @@ public class VenueDetails extends BaseFragment {
         if (mVenue != null) {
             mTextViewName.setText(mVenue.name);
             try {
-                getVenue();
+                getVenuePhotos();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -75,30 +76,18 @@ public class VenueDetails extends BaseFragment {
         return view;
     }
 
-    public void getVenue() throws IOException {
+    public void getVenuePhotos() throws IOException {
         showProgress(true);
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
         String date = simpleDate.format(new Date());
         BaseAPI.VenueInterface venueInterface = BaseAPI.getInstance().getVenueInterface();
-        final Call<FoursquareGetVenue> call = venueInterface.getVenue(mVenue.id, BaseAPI.FOURSQUARE_CLIENT_ID, BaseAPI.FOURSQUARE_CLIENT_SECRET, date);
-        call.enqueue(new Callback<FoursquareGetVenue>() {
+        final Call<FoursquareGetVenuePhotos> call = venueInterface.getVenuePhotos(mVenue.id, BaseAPI.FOURSQUARE_CLIENT_ID, BaseAPI.FOURSQUARE_CLIENT_SECRET, date);
+        call.enqueue(new Callback<FoursquareGetVenuePhotos>() {
             @Override
-            public void onResponse(Call<FoursquareGetVenue> call, Response<FoursquareGetVenue> response) {
+            public void onResponse(Call<FoursquareGetVenuePhotos> call, Response<FoursquareGetVenuePhotos> response) {
 
-                FoursquareGetVenue foursquareGetVenue = response.body();
-                mVenue = foursquareGetVenue.getResponse().getVenue();
-                // TODO: parse images from venue response
-                List<String> testData = new ArrayList<String>();
-                testData.add("https://upload.wikimedia.org/wikipedia/commons/c/c0/Gingerbread_House_Essex_CT.jpg");
-                testData.add("https://upload.wikimedia.org/wikipedia/commons/f/f8/Ellen_H._Swallow_Richards_House_Boston_MA_01.jpg");
-                testData.add("http://resources.phrasemix.com/img/full/suburban-houses.jpg");
-                testData.add("http://hookedonhouses.net/wp-content/uploads/2009/01/Father-of-the-Bride-Lookalike-house.jpg");
-                testData.add("https://upload.wikimedia.org/wikipedia/commons/c/c9/Ranch_style_home_in_Salinas,_California.JPG");
-                testData.add("https://s-media-cache-ak0.pinimg.com/236x/90/4a/0e/904a0e6ab72e18756e5b186da3d5147b.jpg");
-                testData.add("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBqYSOdVZ04yElTOrVhvS6k9QAju846kpJp6RKm-9pdDevrnOc");
-                testData.add("http://www.comohotels.com/parrotcay/sites/default/files/styles/440x138/public/images/nonlinking/parrotcay_two_bedroom_beach_house_exterior.jpg?itok=PwZrfdDN");
-                testData.add("https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTEavCht10H_zx13RujOoRo2_y6t5JBa0Yg57VXZwCSBA2wvn8P");
-                mImageAdapter = new ImageAdapter(VenueDetails.this.getActivity(), testData);
+                FoursquareGetVenuePhotos foursquareGetVenuePhotos = response.body();
+                mImageAdapter = new ImageAdapter(VenueDetails.this.getActivity(), foursquareGetVenuePhotos.getResponse().getPhotos().getItems());
                 if (mGridViewGallery != null) {
                     mGridViewGallery.setAdapter(mImageAdapter);
                 }
@@ -106,7 +95,7 @@ public class VenueDetails extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call<FoursquareGetVenue> call, Throwable t) {
+            public void onFailure(Call<FoursquareGetVenuePhotos> call, Throwable t) {
                 Log.d("error", "Error: " + call.request().body());
                 showProgress(false);
             }

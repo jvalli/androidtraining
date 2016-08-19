@@ -8,13 +8,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.gap.androidtraining.R;
+import com.gap.androidtraining.data.VenuePhoto;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ImageAdapter extends BaseAdapter {
 
-    private List<String> items;
+    private List<VenuePhoto> items;
     private LayoutInflater inflater = null;
     private Activity context;
 
@@ -22,13 +23,13 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageViewPhoto;
     }
 
-    public ImageAdapter(Activity context, List<String> items) {
+    public ImageAdapter(Activity context, List<VenuePhoto> items) {
         this.items = items;
         this.context = context;
         this.inflater = LayoutInflater.from(this.context);
     }
 
-    public List<String> getItems() {
+    public List<VenuePhoto> getItems() {
         return items;
     }
 
@@ -66,7 +67,8 @@ public class ImageAdapter extends BaseAdapter {
 
         convertView.setId(position);
 
-        Picasso.with(context).load(items.get(position)).resize(200, 200).centerCrop().into(holder.imageViewPhoto);
+        VenuePhoto venuePhoto = items.get(position);
+        Picasso.with(context).load(venuePhoto.getFullPhotoUrl()).resize(200, 200).centerCrop().into(holder.imageViewPhoto);
 
         return (convertView);
     }
